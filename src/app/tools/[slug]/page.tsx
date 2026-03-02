@@ -3,8 +3,11 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
+export const dynamicParams = true; // CRITICAL: This allows new database rows to become pages
 
 export default async function ToolPage({ params }: { params: { slug: string } }) {
+  const { slug } = params;
+
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -13,21 +16,23 @@ export default async function ToolPage({ params }: { params: { slug: string } })
   const { data: tool, error } = await supabase
     .from('ai_tools_data')
     .select('*')
-    .eq('slug', params.slug)
+    .eq('slug', slug)
     .single();
 
-  // 1. Check if the tool exists at all
-  if (!tool || error) return notFound();
+  if (!tool || error) {
+    console.error("Supabase Error or No Tool found for slug:", slug);
+    return notFound();
+  }
 
-  // 2. Safety Check: If the AI returned slightly different keys
+  // Extract data from the comparison_data JSON column
   const data = tool.comparison_data || {};
-  const summary = data.summary || data.overview || "No summary available.";
+  const summary = data.summary || "No summary available.";
   const table = data.table || [];
-  const tip = data.sabaq_tip || data.tip || "No expert tip available yet.";
+  const tip = data.sabaq_tip || "No expert tip available yet.";
 
   return (
     <article className="p-10 max-w-4xl mx-auto font-sans">
-      <Link href="/" className="text-blue-500 mb-8 block">← Back to Index</Link>
+      <Link href="/" className="text-blue-500 mb-8 block hover:underline">← Back to Index</Link>
       
       <h1 className="text-4xl font-bold mb-6 text-gray-900">{tool.keyword}</h1>
       
@@ -50,10 +55,10 @@ export default async function ToolPage({ params }: { params: { slug: string } })
               {table.map((row: any, i: number) => (
                 <tr key={i} className="hover:bg-gray-50">
                   <td className="border p-3 font-semibold text-gray-800 bg-gray-50/50">
-                    {row.Feature || row.feature || Object.values(row)[0]}
+                    {row.Feature || Object.values(row)[0]}
                   </td>
                   <td className="border p-3 text-gray-600">
-                    {row.Detail || row.detail || Object.values(row)[1]}
+                    {row.Detail || Object.values(row)[1]}
                   </td>
                 </tr>
               ))}
@@ -62,7 +67,7 @@ export default async function ToolPage({ params }: { params: { slug: string } })
         </section>
       )}
 
-      <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-r-lg">
+      <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-r-lg shadow-sm">
         <h3 className="text-xl font-bold text-yellow-800 mb-2">💡 Sabaq Expert Insight (2026)</h3>
         <p className="text-yellow-900">{tip}</p>
       </div>
