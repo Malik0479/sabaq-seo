@@ -13,13 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  // 1. Change the title to your Brand Name
   title: "Sabaq AI | Expert Comparison Index",
   description: "Authentic, real-time AI tool comparisons and trending tech analysis.",
-  
-  // 2. Add this verification object for Google Search Console
   verification: {
-    google: "PASTE_YOUR_GSC_CODE_HERE", 
+    // Paste only the code inside the quotes from your meta tag
+    google: "0hQ3YgVADpnzbg6PVt99Ty_DtkqxRGtibZCwyNiN75g", 
   },
 };
 
