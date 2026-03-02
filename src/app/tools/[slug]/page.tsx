@@ -5,13 +5,13 @@ import Link from 'next/link';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-// This helper function tells Next.js that even if it doesn't know a slug, it should check the DB
+// This tells Next.js to check the DB for any slug it doesn't know yet
 export async function generateStaticParams() {
   return [];
 }
 
 export default async function ToolPage({ params }: { params: Promise<{ slug: string }> }) {
-  // 1. Await the params (Required in Next.js 15+)
+  // 1. You MUST await params in this version of Next.js
   const { slug } = await params;
 
   const supabase = createClient(
@@ -19,7 +19,7 @@ export default async function ToolPage({ params }: { params: Promise<{ slug: str
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   );
 
-  // 2. Fetch data with explicit error logging
+  // 2. Fetch data from your specific table
   const { data: tool, error } = await supabase
     .from('ai_tools_data')
     .select('*')
@@ -27,21 +27,22 @@ export default async function ToolPage({ params }: { params: Promise<{ slug: str
     .single();
 
   if (error || !tool) {
-    console.error("404 Triggered. Slug:", slug, "Error:", error);
+    console.error("404 Triggered. Slug requested:", slug, "Error:", error);
     return notFound();
   }
 
   const content = tool.comparison_data || {};
   
   return (
-    <main className="p-10 max-w-4xl mx-auto">
-      <Link href="/" className="text-blue-500 mb-4 block">← Back to Home</Link>
-      <h1 className="text-4xl font-bold mb-6">{tool.keyword}</h1>
-      <p className="text-gray-700 text-lg mb-8">{content.summary}</p>
+    <main className="p-10 max-w-4xl mx-auto font-sans">
+      <Link href="/" className="text-blue-600 hover:underline mb-8 block">← Back to Index</Link>
       
-      <div className="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500">
-        <h3 className="font-bold text-blue-800">Expert Tip</h3>
-        <p>{content.sabaq_tip}</p>
+      <h1 className="text-4xl font-bold mb-6 text-gray-900">{tool.keyword}</h1>
+      <p className="text-lg text-gray-700 mb-10 leading-relaxed">{content.summary}</p>
+      
+      <div className="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-lg shadow-sm">
+        <h3 className="text-xl font-bold text-blue-800 mb-2">💡 Sabaq Expert Insight</h3>
+        <p className="text-blue-900">{content.sabaq_tip}</p>
       </div>
     </main>
   );
