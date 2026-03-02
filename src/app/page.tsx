@@ -18,8 +18,8 @@ export default async function Home() {
 
   return (
     <main className="p-10 max-w-4xl mx-auto font-sans">
-      <h1 className="text-4xl font-bold mb-4 text-blue-600">Sabaq AI</h1>
-      <p className="text-gray-600 mb-10 text-lg">Real-time AI Tool Comparisons & Tech Trends 2026.</p>
+      <h1 className="text-4xl font-bold mb-4 text-blue-600">Sabaq</h1>
+      <p className="text-gray-600 mb-10 text-lg">Real-time Trends 2026.</p>
       
       <div className="grid gap-4 sm:grid-cols-2">
         {tools && tools.length > 0 ? (
