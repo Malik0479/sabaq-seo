@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 import { Zap, Search, Globe, ArrowRight } from "lucide-react";
-
+export const dynamic = 'force-dynamic';
 export default async function Home() {
   // Fetch all tools from your Supabase DB to list them
   // This will stay empty until you run your Python miner script
