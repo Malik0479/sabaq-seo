@@ -25,60 +25,67 @@ export default async function ToolPage({ params }: { params: Promise<{ slug: str
   const sources = content.sources || [];
 
   return (
-    <main className="min-h-screen bg-white text-slate-900 pb-20">
-      {/* Premium Navbar */}
-      <nav className="border-b bg-slate-50/50 backdrop-blur-md sticky top-0 z-10 px-6 py-4">
-        <div className="max-w-4xl mx-auto flex justify-between items-center">
-          <Link href="/" className="font-black text-2xl text-blue-600 tracking-tighter">
-            SABAQ <span className="text-slate-900">INSIGHTS</span>
+    <main className="min-h-screen bg-[#FCFCFC] text-slate-900 pb-20 selection:bg-blue-100">
+      {/* Editorial Navbar */}
+      <nav className="border-b bg-white/80 backdrop-blur-md sticky top-0 z-10 px-6 py-5">
+        <div className="max-w-5xl mx-auto flex justify-between items-center">
+          <Link href="/" className="font-black text-2xl text-slate-900 tracking-tighter">
+            SABAQ <span className="text-blue-600 uppercase">Insights</span>
           </Link>
-          <Link href="/" className="text-sm font-medium text-slate-500 hover:text-blue-600 transition">
-            ← Back to Index
-          </Link>
+          <div className="flex items-center gap-6">
+            <Link href="/" className="text-[10px] font-black text-slate-400 hover:text-slate-900 transition uppercase tracking-[0.2em]">Research Index</Link>
+            <Link href="/" className="text-sm font-bold text-blue-600 px-4 py-2 bg-blue-50 rounded-full hover:bg-blue-100 transition">← Back</Link>
+          </div>
         </div>
       </nav>
 
-      <article className="max-w-4xl mx-auto px-6 py-12">
-        {/* Title & Metadata */}
-        <header className="mb-12">
-          <div className="flex items-center gap-3 mb-6">
-            <span className="bg-blue-600 text-white px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest">
-              Verified 2026
+      <article className="max-w-4xl mx-auto px-6 py-16">
+        {/* Editorial Header */}
+        <header className="mb-20">
+          <div className="flex items-center gap-4 mb-8">
+            <span className="bg-slate-900 text-white px-3 py-1 rounded-sm text-[10px] font-black uppercase tracking-[0.25em]">
+              Industry Intelligence
             </span>
-            <span className="text-slate-300">|</span>
+            <span className="text-slate-200">/</span>
             <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
-              Tech Comparison Report
+              March 2026 Release
             </span>
           </div>
           
-          <h1 className="text-5xl md:text-6xl font-black mb-8 leading-[1.1] text-slate-900">
+          <h1 className="text-6xl md:text-7xl font-black mb-10 leading-[1.05] text-slate-900 tracking-tight">
             {tool.keyword}
           </h1>
           
-          <p className="text-xl text-slate-600 leading-relaxed border-l-4 border-blue-500 pl-8 italic bg-slate-50 py-6 rounded-r-xl">
-            {content.summary}
-          </p>
+          <div className="bg-white p-10 rounded-3xl border border-slate-100 shadow-sm">
+            <p className="text-2xl text-slate-700 leading-relaxed font-medium tracking-tight">
+              {content.summary}
+            </p>
+          </div>
         </header>
 
-        {/* Detailed Comparison Table */}
+        {/* Technical Breakdown Section */}
         {tableData.length > 0 && (
-          <section className="mb-16">
-            <h2 className="text-3xl font-extrabold mb-8 text-slate-900">Key Feature Analysis</h2>
-            <div className="overflow-hidden border border-slate-200 rounded-2xl shadow-xl shadow-slate-200/50">
+          <section className="mb-20">
+            <div className="flex items-baseline justify-between mb-10 border-b-2 border-slate-900 pb-5">
+              <h2 className="text-3xl font-black text-slate-900 uppercase tracking-tighter">Detailed Specifications</h2>
+              <span className="text-[10px] font-black text-slate-400 tracking-[0.3em]">DATASET_REF_026</span>
+            </div>
+            
+            <div className="overflow-hidden border border-slate-200 rounded-3xl shadow-2xl shadow-slate-200/30">
               <table className="w-full text-left bg-white">
-                <thead className="bg-slate-900 text-white">
-                  <tr>
-                    <th className="p-5 font-bold uppercase text-xs tracking-[0.2em]">Parameter</th>
-                    <th className="p-5 font-bold uppercase text-xs tracking-[0.2em]">Expert Breakdown</th>
+                <thead>
+                  <tr className="bg-slate-50 border-b border-slate-100">
+                    <th className="p-6 font-black uppercase text-[11px] tracking-[0.3em] text-slate-500">Categorization</th>
+                    <th className="p-6 font-black uppercase text-[11px] tracking-[0.3em] text-slate-500">Primary Observations</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {tableData.map((row: any, i: number) => (
-                    <tr key={i} className="hover:bg-blue-50/30 transition-colors">
-                      <td className="p-6 font-bold text-slate-900 bg-slate-50/50 w-1/3 align-top">
+                    <tr key={i} className="group transition-colors">
+                      <td className="p-8 font-black text-slate-900 w-1/3 align-top group-hover:text-blue-600 transition-colors">
                         {row.Feature}
                       </td>
-                      <td className="p-6 text-slate-700 leading-relaxed text-md">
+                      <td className="p-8 text-slate-600 leading-relaxed text-lg font-medium">
                         {row.Detail}
                       </td>
                     </tr>
@@ -89,37 +96,41 @@ export default async function ToolPage({ params }: { params: Promise<{ slug: str
           </section>
         )}
 
-        {/* Sabaq Expert Insight Box */}
-        <section className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-[2.5rem] p-10 text-white shadow-2xl mb-20 relative overflow-hidden">
-          <div className="relative z-10">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="text-3xl">💡</span>
-              <h3 className="text-2xl font-black uppercase tracking-wider">Sabaq Insider Tip</h3>
-            </div>
-            <p className="text-blue-50 text-xl leading-relaxed font-medium">
-              {content.sabaq_tip}
+        {/* Strategic Recommendation Box */}
+        <section className="bg-slate-900 rounded-[3rem] p-12 text-white shadow-3xl mb-24 relative overflow-hidden group">
+          <div className="relative z-10 max-w-2xl">
+            <h3 className="text-xs font-black uppercase tracking-[0.5em] text-blue-400 mb-8">Strategic Outlook</h3>
+            <p className="text-white text-3xl font-bold leading-tight tracking-tight mb-12">
+              "{content.sabaq_tip}"
             </p>
+            <div className="flex items-center gap-5">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-blue-600 to-blue-400 flex items-center justify-center font-bold shadow-lg">FS</div>
+              <div>
+                <p className="text-sm font-bold">Furqan Sharjeel</p>
+                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Lead Research Strategist</p>
+              </div>
+            </div>
           </div>
-          {/* Subtle background decoration */}
-          <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+          {/* Subtle Accent */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[100px] group-hover:bg-blue-500/20 transition-all duration-700"></div>
         </section>
 
-        {/* Citations & Sources (Essential for Google Trust) */}
+        {/* Reference Links */}
         {sources.length > 0 && (
-          <section className="border-t border-slate-100 pt-12">
-            <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.4em] mb-8 text-center">
-              Research Bibliography & Sources
+          <section className="pt-16 border-t border-slate-200">
+            <h4 className="text-[10px] font-black text-slate-300 uppercase tracking-[0.6em] mb-12 text-center">
+              Primary Research Bibliography
             </h4>
-            <div className="grid gap-3">
+            <div className="grid gap-4">
               {sources.map((url: string, i: number) => (
                 <a 
                   key={i} 
                   href={url} 
                   target="_blank" 
-                  className="group flex items-center gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100 hover:border-blue-200 hover:bg-white transition-all"
+                  className="flex items-center gap-8 p-6 hover:bg-white rounded-2xl transition-all border border-transparent hover:border-slate-100 hover:shadow-xl group"
                 >
-                  <span className="font-mono text-slate-300 font-bold">[{String(i + 1).padStart(2, '0')}]</span>
-                  <span className="text-blue-600 group-hover:text-blue-700 text-sm truncate font-medium">
+                  <span className="text-xs font-black text-slate-200 group-hover:text-blue-200 transition-colors">[{String(i + 1).padStart(2, '0')}]</span>
+                  <span className="text-blue-600 text-sm truncate font-bold border-b-2 border-transparent group-hover:border-blue-100">
                     {url}
                   </span>
                 </a>
