@@ -30,7 +30,7 @@ export default async function ToolPage({ params }: { params: Promise<{ slug: str
       <nav className="border-b bg-slate-50/50 backdrop-blur-md sticky top-0 z-10 px-6 py-4">
         <div className="max-w-4xl mx-auto flex justify-between items-center">
           <Link href="/" className="font-black text-2xl text-blue-600 tracking-tighter">
-            SABAQ <span className="text-slate-900">AI</span>
+            SABAQ <span className="text-slate-900">INSIGHTS</span>
           </Link>
           <Link href="/" className="text-sm font-medium text-slate-500 hover:text-blue-600 transition">
             ← Back to Index
