@@ -2,7 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 
-// Ensures the page stays up-to-date with your Python bot's latest research
+// Ensures the research is always live and never cached
 export const dynamic = 'force-dynamic';
 
 export default async function ToolPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -115,27 +115,25 @@ export default async function ToolPage({ params }: { params: Promise<{ slug: str
           <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none"></div>
         </section>
 
-        {/* --- FIXED REFERENCE LINKS SECTION --- */}
+        {/* --- CLEAN REFERENCE LINKS SECTION --- */}
         {sources.length > 0 && (
           <section className="pt-16 border-t border-slate-200">
             <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.6em] mb-12 text-center">
               Primary Research Bibliography
             </h4>
-            <div className="grid gap-4 max-w-full">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {sources.map((url: string, i: number) => (
-                <div key={i} className="flex gap-5 items-start p-5 bg-slate-50 rounded-2xl border border-slate-100 hover:bg-white hover:shadow-lg transition-all group overflow-hidden">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-[10px] font-black text-slate-500 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                    {i + 1}
+                <a 
+                  key={i} 
+                  href={url} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="flex items-center justify-center p-4 bg-slate-50 rounded-xl border border-slate-100 hover:bg-white hover:border-blue-200 hover:shadow-xl group transition-all"
+                >
+                  <span className="text-xs font-bold text-blue-600 group-hover:text-blue-700 transition-colors">
+                    Reference {i + 1}
                   </span>
-                  <a 
-                    href={url} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="text-blue-600 text-xs md:text-sm font-bold hover:underline break-all leading-loose pr-4"
-                  >
-                    {url}
-                  </a>
-                </div>
+                </a>
               ))}
             </div>
           </section>
