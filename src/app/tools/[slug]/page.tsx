@@ -25,7 +25,7 @@ export default async function ToolPage({ params }: { params: Promise<{ slug: str
   const sources = content.sources || [];
 
   return (
-    <main className="min-h-screen bg-[#FCFCFC] text-slate-900 pb-20 selection:bg-blue-100">
+    <main className="min-h-screen bg-white text-slate-900 pb-20 selection:bg-blue-100">
       {/* Editorial Navbar */}
       <nav className="border-b bg-white/80 backdrop-blur-md sticky top-0 z-10 px-6 py-5">
         <div className="max-w-5xl mx-auto flex justify-between items-center">
@@ -115,24 +115,24 @@ export default async function ToolPage({ params }: { params: Promise<{ slug: str
           <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[100px] group-hover:bg-blue-500/20 transition-all duration-700"></div>
         </section>
 
-        {/* Reference Links */}
+        {/* --- FIXED REFERENCE LINKS SECTION --- */}
         {sources.length > 0 && (
           <section className="pt-16 border-t border-slate-200">
             <h4 className="text-[10px] font-black text-slate-300 uppercase tracking-[0.6em] mb-12 text-center">
               Primary Research Bibliography
             </h4>
-            <div className="grid gap-4">
+            {/* Using flex-wrap and justify-center to handle long lists safely */}
+            <div className="flex flex-wrap gap-4 justify-center max-w-2xl mx-auto">
               {sources.map((url: string, i: number) => (
                 <a 
                   key={i} 
                   href={url} 
                   target="_blank" 
-                  className="flex items-center gap-8 p-6 hover:bg-white rounded-2xl transition-all border border-transparent hover:border-slate-100 hover:shadow-xl group"
+                  rel="noopener noreferrer" // Added for security best practice
+                  {/* Styled as compact badges that cannot force the page to expand */}
+                  className="px-6 py-3 bg-slate-50 hover:bg-white rounded-full border border-slate-100 hover:border-blue-200 hover:shadow-lg transition-all text-sm font-bold text-blue-600 whitespace-nowrap"
                 >
-                  <span className="text-xs font-black text-slate-200 group-hover:text-blue-200 transition-colors">[{String(i + 1).padStart(2, '0')}]</span>
-                  <span className="text-blue-600 text-sm truncate font-bold border-b-2 border-transparent group-hover:border-blue-100">
-                    {url}
-                  </span>
+                  Reference [{i + 1}]
                 </a>
               ))}
             </div>
